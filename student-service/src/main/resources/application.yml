@@ -11,7 +11,6 @@ spring:
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:password}
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
 eureka:
@@ -21,4 +20,9 @@ eureka:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
-      defaultZone: ${EUREKA_URL:http://localhost:9000}/eureka/
+      defaultZone: ${EUREKA_URL:http://localhost:9030}/eureka/
+minio:
+  url: ${MINIO_URL:http://127.0.0.1:9000}
+  bucket: ${MINIO_BUCKET:image-storage}
+  username: ${MINIO_USERNAME:minioadmin}
+  password: ${MINIO_PASSWORD:minioadmin}
