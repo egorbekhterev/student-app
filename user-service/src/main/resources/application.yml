@@ -1,1 +1,15 @@
-
+server:
+  error:
+    include-message: always
+  port: ${HOST_PORT:9020}
+spring:
+  application:
+    name: @project.name@
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: ${EUREKA_URL:http://localhost:9000}/eureka/

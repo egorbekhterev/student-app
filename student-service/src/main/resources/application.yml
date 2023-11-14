@@ -1,7 +1,7 @@
 server:
   error:
     include-message: always
-  port: ${HOST_PORT:9030}
+  port: ${HOST_PORT:9010}
 spring:
   application:
     name: @project.name@
