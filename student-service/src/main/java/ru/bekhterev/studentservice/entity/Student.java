@@ -1,6 +1,7 @@
 package ru.bekhterev.studentservice.entity;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 import ru.bekhterev.studentservice.enums.Faculty;
 import jakarta.persistence.*;
 
@@ -14,20 +15,23 @@ import jakarta.persistence.*;
 public class Student {
 
     @Id
-    @Column(nullable = false, unique = true)
+    @GeneratedValue(generator = "record-generator")
+    @GenericGenerator(name = "record-generator",
+            strategy = "ru.bekhterev.studentservice.generator.RecordBookNumberGenerator")
+    @EqualsAndHashCode.Include
     private String recordBookNumber;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Faculty faculty;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 60)
     private String lastName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 40)
     private String firstName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 40)
     private String middleName;
 
     private String fileName;

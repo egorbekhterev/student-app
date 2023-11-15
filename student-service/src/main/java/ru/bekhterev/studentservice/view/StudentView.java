@@ -13,5 +13,5 @@ public class StudentView {
     private String lastName;
     private String firstName;
     private String middleName;
-    private String filename;
+    private String fileUrl;
 }

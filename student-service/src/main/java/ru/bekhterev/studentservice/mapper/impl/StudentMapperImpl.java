@@ -1,36 +1,46 @@
 package ru.bekhterev.studentservice.mapper.impl;
 
+import io.minio.errors.MinioException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.bekhterev.studentservice.entity.Student;
-import ru.bekhterev.studentservice.enums.Faculty;
 import ru.bekhterev.studentservice.mapper.StudentMapper;
+import ru.bekhterev.studentservice.service.MinioService;
 import ru.bekhterev.studentservice.view.StudentDto;
 import ru.bekhterev.studentservice.view.StudentView;
 
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
 @Component
+@RequiredArgsConstructor
 public class StudentMapperImpl implements StudentMapper {
 
+    private final MinioService minioService;
+
     @Override
-    public Student map(StudentDto studentDto) {
+    public Student map(StudentDto studentDto) throws IOException, MinioException, InvalidKeyException, NoSuchAlgorithmException {
+        minioService.saveFile(studentDto.getImage());
         return Student.builder()
-                .withRecordBookNumber(studentDto.getRecordBookNumber())
-                .withFaculty(Faculty.valueOf(studentDto.getFaculty()))
+                .withFaculty(studentDto.getFaculty())
                 .withLastName(studentDto.getLastName())
                 .withFirstName(studentDto.getFirstName())
                 .withMiddleName(studentDto.getMiddleName())
-                .withFileName(null)
+                .withFileName(studentDto.getImage().getOriginalFilename())
                 .build();
     }
 
     @Override
-    public StudentView map(Student student) {
+    public StudentView map(Student student) throws IOException, MinioException, InvalidKeyException, NoSuchAlgorithmException {
+        String fileUrl = minioService.getFileUrl(student.getFileName());
         return StudentView.builder()
                 .withRecordBookNumber(student.getRecordBookNumber())
                 .withFaculty(student.getFaculty())
                 .withLastName(student.getLastName())
                 .withFirstName(student.getFirstName())
                 .withMiddleName(student.getMiddleName())
-                .withFilename(student.getFileName())
+                .withFileUrl(fileUrl)
                 .build();
     }
 }
