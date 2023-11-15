@@ -1,12 +1,10 @@
-package ru.bekhterev.studentservice.view;
+package ru.bekhterev.userservice.view;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
-import ru.bekhterev.studentservice.enums.Faculty;
+import ru.bekhterev.userservice.enums.Faculty;
 
 @Data
-@Builder(setterPrefix = "with")
 @ToString
 public class StudentView {
 

@@ -11,6 +11,17 @@ spring:
       file-size-threshold: 1KB
       max-file-size: 900MB
       max-request-size: 900MB
+  kafka:
+    bootstrap-servers: localhost:29092
+    consumer:
+      group-id: ${spring.application.name}
+      autoOffsetReset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      client-id: ${spring.application.name}
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 eureka:
   instance:
     preferIpAddress: true

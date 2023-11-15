@@ -26,9 +26,9 @@ public class StudentController {
 
     private final StudentService studentService;
 
-    @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_XML_VALUE, value = "/{recordBookNumber}")
     @ResponseBody
-    public ResponseEntity<StudentView> getStudent(@RequestParam String recordBookNumber) {
+    public ResponseEntity<StudentView> getStudent(@PathVariable String recordBookNumber) {
         try {
             return ResponseEntity.ok(studentService.getStudent(recordBookNumber));
         } catch (EntityNotExistException e) {

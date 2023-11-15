@@ -38,7 +38,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentView getStudent(String recordBookNumber) throws EntityNotExistException, IOException, MinioException, InvalidKeyException, NoSuchAlgorithmException {
         Student student = studentRepository.findByRecordBookNumber(recordBookNumber).orElseThrow(
-                () -> new EntityNotExistException("Student with record book number '%s not found", recordBookNumber));
+                () -> new EntityNotExistException("Student with record book number '%s' not found", recordBookNumber));
         return studentMapper.map(student);
     }
 
