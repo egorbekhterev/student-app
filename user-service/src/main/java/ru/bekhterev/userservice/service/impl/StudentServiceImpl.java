@@ -1,31 +1,31 @@
 package ru.bekhterev.userservice.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.bekhterev.userservice.kafka.StudentKafkaListener;
+import ru.bekhterev.userservice.exception.ParsingException;
 import ru.bekhterev.userservice.kafka.StudentKafkaSender;
 import ru.bekhterev.userservice.service.StudentService;
-import ru.bekhterev.userservice.view.StudentView;
+import ru.bekhterev.userservice.view.GetStudentResponse;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
 
     private final StudentKafkaSender studentKafkaSender;
-    private final StudentKafkaListener studentKafkaListener;
 
     @Override
-    public StudentView getUserByRecordBookNumber(String recordBookNumber) {
-        studentKafkaSender.sendRecordBookNumber(recordBookNumber);
-        CountDownLatch countDownLatch = new CountDownLatch(1);
+    public GetStudentResponse getStudentByRecordBookNumber(String recordBookNumber) throws ParsingException,
+            ExecutionException, InterruptedException {
+        String student = studentKafkaSender.sendRecordBookNumber(recordBookNumber);
+        XmlMapper xmlMapper = new XmlMapper();
         try {
-            countDownLatch.await(500, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            return xmlMapper.readValue(student, GetStudentResponse.class);
+        } catch (JsonProcessingException e) {
+            throw new ParsingException("Exception while parsing xml string from student-service");
         }
-        return studentKafkaListener.getStudentView();
     }
 }

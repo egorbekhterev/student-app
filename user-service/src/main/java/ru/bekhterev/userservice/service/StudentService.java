@@ -1,8 +1,12 @@
 package ru.bekhterev.userservice.service;
 
-import ru.bekhterev.userservice.view.StudentView;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import ru.bekhterev.userservice.view.GetStudentResponse;
+
+import java.util.concurrent.ExecutionException;
 
 public interface StudentService {
 
-    StudentView getUserByRecordBookNumber(String recordBookNumber);
+    GetStudentResponse getStudentByRecordBookNumber(String recordBookNumber) throws JsonProcessingException, ExecutionException, InterruptedException;
 }

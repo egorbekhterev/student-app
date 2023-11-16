@@ -5,12 +5,6 @@ server:
 spring:
   application:
     name: @project.name@
-  servlet:
-    multipart:
-      enabled: true
-      file-size-threshold: 1KB
-      max-file-size: 900MB
-      max-request-size: 900MB
   kafka:
     bootstrap-servers: localhost:29092
     consumer:
@@ -22,11 +16,7 @@ spring:
       client-id: ${spring.application.name}
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
-eureka:
-  instance:
-    preferIpAddress: true
-  client:
-    registerWithEureka: true
-    fetchRegistry: true
-    serviceUrl:
-      defaultZone: ${EUREKA_URL:http://localhost:9030}/eureka/
+kafka:
+  topic:
+    students: students
+    users: users

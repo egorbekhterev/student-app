@@ -1,4 +1,4 @@
-package ru.bekhterev.userservice.configuration;
+package ru.bekhterev.studentservicesoap.configuration;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.admin.NewTopic;
@@ -24,12 +24,12 @@ public class KafkaConfig {
     private final ConsumerFactory<Long, String> consumerFactory;
     private final ProducerFactory<Long, String> producerFactory;
 
-    @Value("${kafka.topic.users}")
-    private String usersTopicName;
+    @Value("${kafka.topic.students}")
+    private String studentsTopicName;
 
     @Bean
-    public NewTopic topicUsers() {
-        return new NewTopic(usersTopicName, 1, (short) 1);
+    public NewTopic topicStudents() {
+        return new NewTopic(studentsTopicName, 1, (short) 1);
     }
 
     @Bean
@@ -45,7 +45,7 @@ public class KafkaConfig {
 
     @Bean
     public KafkaMessageListenerContainer<Long, String> replyContainer(ConsumerFactory<Long, String> cf) {
-        ContainerProperties containerProperties = new ContainerProperties(usersTopicName);
+        ContainerProperties containerProperties = new ContainerProperties(studentsTopicName);
         return new KafkaMessageListenerContainer<>(cf, containerProperties);
     }
 
