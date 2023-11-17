@@ -16,9 +16,8 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:password}
-  jpa:
-    hibernate:
-      ddl-auto: update
+  flyway:
+    fail-on-missing-locations: true
   kafka:
     bootstrap-servers: ${BOOTSTRAP_SERVER:localhost:29092}
     consumer:
