@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.bekhterev.userservice.exception.ParsingException;
 import ru.bekhterev.userservice.kafka.StudentKafkaSender;
 import ru.bekhterev.userservice.service.StudentService;
+import ru.bekhterev.userservice.view.GetAllStudentsResponse;
 import ru.bekhterev.userservice.view.GetStudentResponse;
 
 import java.util.concurrent.ExecutionException;
@@ -24,6 +25,17 @@ public class StudentServiceImpl implements StudentService {
         XmlMapper xmlMapper = new XmlMapper();
         try {
             return xmlMapper.readValue(student, GetStudentResponse.class);
+        } catch (JsonProcessingException e) {
+            throw new ParsingException("Exception while parsing xml string from student-service");
+        }
+    }
+
+    @Override
+    public GetAllStudentsResponse getStudents() throws ParsingException, ExecutionException, InterruptedException {
+        String students = studentKafkaSender.sendRecordBookNumber("");
+        XmlMapper xmlMapper = new XmlMapper();
+        try {
+            return xmlMapper.readValue(students, GetAllStudentsResponse.class);
         } catch (JsonProcessingException e) {
             throw new ParsingException("Exception while parsing xml string from student-service");
         }

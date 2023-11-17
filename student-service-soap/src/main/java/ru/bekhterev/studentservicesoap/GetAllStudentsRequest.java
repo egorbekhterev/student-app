@@ -10,7 +10,6 @@ package ru.bekhterev.studentservicesoap;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
 
@@ -25,7 +24,6 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="recordBookNumber" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -35,37 +33,9 @@ import jakarta.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "recordBookNumber"
-})
-@XmlRootElement(name = "getStudentRequest")
-public class GetStudentRequest {
+@XmlType(name = "")
+@XmlRootElement(name = "getAllStudentsRequest")
+public class GetAllStudentsRequest {
 
-    @XmlElement(required = true)
-    protected String recordBookNumber;
-
-    /**
-     * Gets the value of the recordBookNumber property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getRecordBookNumber() {
-        return recordBookNumber;
-    }
-
-    /**
-     * Sets the value of the recordBookNumber property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setRecordBookNumber(String value) {
-        this.recordBookNumber = value;
-    }
 
 }
