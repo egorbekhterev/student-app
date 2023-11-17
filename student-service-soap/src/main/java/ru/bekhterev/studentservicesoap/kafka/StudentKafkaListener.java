@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Service;
+import ru.bekhterev.studentservicesoap.exception.ParsingException;
 import ru.bekhterev.studentservicesoap.view.GetStudentResponse;
 import ru.bekhterev.studentservicesoap.client.StudentClient;
 
@@ -17,7 +18,7 @@ public class StudentKafkaListener {
 
     private final StudentClient studentClient;
 
-    @KafkaListener(topics = {"students"}, id = "students")
+    @KafkaListener(topics = {"students"}, id = "students", containerFactory = "requestReplyListenerContainerFactory")
     @SendTo(value = "users")
     public String consumeStudent(String recordBookNumber) {
         log.info("Record book number received from user-service '{}'", recordBookNumber);
@@ -26,7 +27,7 @@ public class StudentKafkaListener {
         try {
             return xmlMapper.writeValueAsString(student);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new ParsingException("Exception while parsing student xml to string");
         }
     }
 }

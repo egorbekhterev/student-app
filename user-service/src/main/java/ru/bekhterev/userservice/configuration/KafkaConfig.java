@@ -16,6 +16,8 @@ import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.listener.KafkaMessageListenerContainer;
 import org.springframework.kafka.requestreply.ReplyingKafkaTemplate;
 
+import java.time.Duration;
+
 @EnableKafka
 @Configuration
 @RequiredArgsConstructor
@@ -26,6 +28,9 @@ public class KafkaConfig {
 
     @Value("${kafka.topic.users}")
     private String usersTopicName;
+
+    @Value("${kafka.timeout}")
+    private long timeout;
 
     @Bean
     public NewTopic topicUsers() {
@@ -40,7 +45,9 @@ public class KafkaConfig {
     @Bean
     public ReplyingKafkaTemplate<Long, String, String> replyKafkaTemplate(
             ProducerFactory<Long, String> pf, KafkaMessageListenerContainer<Long, String> container) {
-        return new ReplyingKafkaTemplate<>(pf, container);
+        ReplyingKafkaTemplate<Long, String, String> replyingKafkaTemplate = new ReplyingKafkaTemplate<>(pf, container);
+        replyingKafkaTemplate.setDefaultReplyTimeout(Duration.ofMillis(timeout));
+        return replyingKafkaTemplate;
     }
 
     @Bean

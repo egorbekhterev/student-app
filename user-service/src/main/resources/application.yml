@@ -20,3 +20,4 @@ kafka:
   topic:
     students: students
     users: users
+  timeout: 2000

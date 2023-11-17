@@ -12,9 +12,6 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
-import org.springframework.kafka.listener.ContainerProperties;
-import org.springframework.kafka.listener.KafkaMessageListenerContainer;
-import org.springframework.kafka.requestreply.ReplyingKafkaTemplate;
 
 @EnableKafka
 @Configuration
@@ -33,27 +30,16 @@ public class KafkaConfig {
     }
 
     @Bean
-    public KafkaTemplate<Long, String> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory);
-    }
-
-    @Bean
-    public ReplyingKafkaTemplate<Long, String, String> replyKafkaTemplate(
-            ProducerFactory<Long, String> pf, KafkaMessageListenerContainer<Long, String> container) {
-        return new ReplyingKafkaTemplate<>(pf, container);
-    }
-
-    @Bean
-    public KafkaMessageListenerContainer<Long, String> replyContainer(ConsumerFactory<Long, String> cf) {
-        ContainerProperties containerProperties = new ContainerProperties(studentsTopicName);
-        return new KafkaMessageListenerContainer<>(cf, containerProperties);
-    }
-
-    @Bean
-    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<Long, String>> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<Long, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<Long, String>> requestReplyListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<Long, String> factory =
+                new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory);
-        factory.setReplyTemplate(kafkaTemplate());
+        factory.setReplyTemplate(replyTemplate());
         return factory;
+    }
+
+    @Bean
+    public KafkaTemplate<Long, String> replyTemplate() {
+        return new KafkaTemplate<>(producerFactory);
     }
 }
