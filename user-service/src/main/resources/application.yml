@@ -6,7 +6,7 @@ spring:
   application:
     name: @project.name@
   kafka:
-    bootstrap-servers: localhost:29092
+    bootstrap-servers: ${BOOTSTRAP_SERVER:localhost:29092}
     consumer:
       group-id: ${spring.application.name}
       autoOffsetReset: earliest

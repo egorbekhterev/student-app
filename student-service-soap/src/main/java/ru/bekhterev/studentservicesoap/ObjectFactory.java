@@ -9,6 +9,9 @@
 package ru.bekhterev.studentservicesoap;
 
 import jakarta.xml.bind.annotation.XmlRegistry;
+import ru.bekhterev.studentservicesoap.view.GetAllStudentsResponse;
+import ru.bekhterev.studentservicesoap.view.GetStudentResponse;
+import ru.bekhterev.studentservicesoap.view.Student;
 
 
 /**
