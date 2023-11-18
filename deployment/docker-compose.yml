@@ -4,10 +4,10 @@ services:
     image: postgres:latest
     container_name: postgres
     ports:
-      - "5432:5432"
+      - '5432:5432'
     environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "password"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
@@ -22,8 +22,8 @@ services:
     volumes:
       - minio_storage:/data
     environment:
-     MINIO_ROOT_USER: minioadmin
-     MINIO_ROOT_PASSWORD: minioadmin
+     MINIO_ROOT_USER: studentuser
+     MINIO_ROOT_PASSWORD: studentpassword
     command: server --console-address ":9001" /data
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
@@ -31,13 +31,13 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
     ports:
-      - 22181:2181
+      - '22181:2181'
   kafka:
     image: confluentinc/cp-kafka:latest
     depends_on:
       - zookeeper
     ports:
-      - 29092:29092
+      - '29092:29092'
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
@@ -49,7 +49,7 @@ services:
     image: provectuslabs/kafka-ui
     container_name: kafka-ui
     ports:
-      - 8090:8080
+      - '8090:8080'
     environment:
       - KAFKA_CLUSTERS_0_NAME=local
       - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092
@@ -58,27 +58,23 @@ services:
       - kafka
       - zookeeper
   studentservice:
-    image: studentservice:latest
+    image: egorbekhterev/studentservice:latest
     container_name: studentservice
-    ports:
-      - 9010:9010
     depends_on:
       postgres:
         condition: service_healthy
     environment:
-      DB_HOST: postgres
+      DB_HOST: localhost
       DB_NAME: postgres
-      MINIO_URL: http://minio:9000
-      BOOTSTRAP_SERVER: kafka:9092
+      BOOTSTRAP_SERVER: localhost:29092
+      MINIO_USERNAME: studentuser
+      MINIO_PASSWORD: studentpassword
+    network_mode: host
   userservice:
-    image: userservice:latest
+    image: egorbekhterev/userservice:latest
     container_name: userservice
-    ports:
-      - 9020:9020
     environment:
-      BOOTSTRAP_SERVER: kafka:9092
-networks:
-  product_service_network:
-    driver: bridge
+      BOOTSTRAP_SERVER: localhost:29092
+    network_mode: host
 volumes:
   minio_storage: {}

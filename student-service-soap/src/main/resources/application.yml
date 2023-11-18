@@ -36,5 +36,5 @@ kafka:
 minio:
   url: ${MINIO_URL:http://127.0.0.1:9000}
   bucket: ${MINIO_BUCKET:image-storage}
-  username: ${MINIO_USERNAME:minioadmin}
-  password: ${MINIO_PASSWORD:minioadmin}
+  username: ${MINIO_USERNAME:studentuser}
+  password: ${MINIO_PASSWORD:studentpassword}
