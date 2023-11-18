@@ -58,7 +58,7 @@ services:
       - kafka
       - zookeeper
   studentservice:
-    image: student-service-soap:0.0.1-SNAPSHOT
+    image: studentservice:latest
     container_name: studentservice
     ports:
       - 9010:9010
@@ -71,7 +71,7 @@ services:
       MINIO_URL: http://minio:9000
       BOOTSTRAP_SERVER: kafka:9092
   userservice:
-    image: user-service:0.0.1-SNAPSHOT
+    image: userservice:latest
     container_name: userservice
     ports:
       - 9020:9020
