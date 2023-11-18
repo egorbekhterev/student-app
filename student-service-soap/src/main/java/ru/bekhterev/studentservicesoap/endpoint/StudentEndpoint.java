@@ -6,12 +6,12 @@ import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
-import ru.bekhterev.studentservicesoap.view.GetAllStudentsResponse;
+import ru.bekhterev.studentservicesoap.GetAllStudentsResponse;
 import ru.bekhterev.studentservicesoap.GetStudentRequest;
+import ru.bekhterev.studentservicesoap.GetStudentResponse;
+import ru.bekhterev.studentservicesoap.Student;
 import ru.bekhterev.studentservicesoap.exception.EntityNotExistException;
 import ru.bekhterev.studentservicesoap.service.StudentService;
-import ru.bekhterev.studentservicesoap.view.GetStudentResponse;
-import ru.bekhterev.studentservicesoap.view.Student;
 
 import java.io.IOException;
 import java.security.InvalidKeyException;

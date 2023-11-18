@@ -4,12 +4,12 @@ import io.minio.errors.MinioException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.bekhterev.studentservicesoap.Student;
 import ru.bekhterev.studentservicesoap.entity.StudentEntity;
 import ru.bekhterev.studentservicesoap.exception.EntityNotExistException;
 import ru.bekhterev.studentservicesoap.mapper.StudentMapper;
 import ru.bekhterev.studentservicesoap.repository.StudentRepository;
 import ru.bekhterev.studentservicesoap.service.StudentService;
-import ru.bekhterev.studentservicesoap.view.Student;
 
 import java.io.IOException;
 import java.security.InvalidKeyException;

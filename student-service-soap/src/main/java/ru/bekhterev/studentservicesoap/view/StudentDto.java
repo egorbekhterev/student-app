@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
-import ru.bekhterev.studentservicesoap.enums.Faculty;
+import ru.bekhterev.studentservicesoap.Faculty;
 
 @Data
 public class StudentDto {

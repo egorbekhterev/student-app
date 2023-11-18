@@ -7,9 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Service;
+import ru.bekhterev.studentservicesoap.GetAllStudentsResponse;
+import ru.bekhterev.studentservicesoap.GetStudentResponse;
 import ru.bekhterev.studentservicesoap.exception.ParsingException;
-import ru.bekhterev.studentservicesoap.view.GetAllStudentsResponse;
-import ru.bekhterev.studentservicesoap.view.GetStudentResponse;
 import ru.bekhterev.studentservicesoap.client.StudentClient;
 
 @Service

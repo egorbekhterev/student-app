@@ -3,10 +3,10 @@ package ru.bekhterev.studentservicesoap.mapper.impl;
 import io.minio.errors.MinioException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.bekhterev.studentservicesoap.Student;
 import ru.bekhterev.studentservicesoap.entity.StudentEntity;
 import ru.bekhterev.studentservicesoap.mapper.StudentMapper;
 import ru.bekhterev.studentservicesoap.service.MinioService;
-import ru.bekhterev.studentservicesoap.view.Student;
 
 import java.io.IOException;
 import java.security.InvalidKeyException;
@@ -21,13 +21,13 @@ public class StudentMapperImpl implements StudentMapper {
     @Override
     public Student map(StudentEntity studentEntity) throws IOException, MinioException, InvalidKeyException, NoSuchAlgorithmException {
         String fileUrl = minioService.getFileUrl(studentEntity.getFileName());
-        return Student.builder()
-                .withRecordBookNumber(studentEntity.getRecordBookNumber())
-                .withFaculty(studentEntity.getFaculty())
-                .withLastName(studentEntity.getLastName())
-                .withFirstName(studentEntity.getFirstName())
-                .withMiddleName(studentEntity.getMiddleName())
-                .withFileUrl(fileUrl)
-                .build();
+        Student student = new Student();
+        student.setFaculty(studentEntity.getFaculty());
+        student.setLastName(studentEntity.getLastName());
+        student.setRecordBookNumber(studentEntity.getRecordBookNumber());
+        student.setFirstName(studentEntity.getFirstName());
+        student.setMiddleName(studentEntity.getMiddleName());
+        student.setFileUrl(fileUrl);
+        return student;
     }
 }

@@ -3,7 +3,7 @@ package ru.bekhterev.studentservicesoap.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-import ru.bekhterev.studentservicesoap.enums.Faculty;
+import ru.bekhterev.studentservicesoap.Faculty;
 
 @Entity
 @Getter

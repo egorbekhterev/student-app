@@ -1,8 +1,8 @@
 package ru.bekhterev.studentservicesoap.mapper;
 
 import io.minio.errors.MinioException;
+import ru.bekhterev.studentservicesoap.Student;
 import ru.bekhterev.studentservicesoap.entity.StudentEntity;
-import ru.bekhterev.studentservicesoap.view.Student;
 
 import java.io.IOException;
 import java.security.InvalidKeyException;

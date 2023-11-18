@@ -5,9 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 import org.springframework.ws.soap.client.core.SoapActionCallback;
 import ru.bekhterev.studentservicesoap.GetAllStudentsRequest;
-import ru.bekhterev.studentservicesoap.view.GetAllStudentsResponse;
+import ru.bekhterev.studentservicesoap.GetAllStudentsResponse;
 import ru.bekhterev.studentservicesoap.GetStudentRequest;
-import ru.bekhterev.studentservicesoap.view.GetStudentResponse;
+import ru.bekhterev.studentservicesoap.GetStudentResponse;
 
 @Slf4j
 public class StudentClient extends WebServiceGatewaySupport {
