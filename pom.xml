@@ -19,8 +19,8 @@
 	</properties>
 
 	<modules>
-		<module>user-service</module>
-		<module>student-service-soap</module>
+		<module>r-service</module>
+		<module>s-service</module>
 	</modules>
 
 </project>

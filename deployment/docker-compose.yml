@@ -57,9 +57,9 @@ services:
     links:
       - kafka
       - zookeeper
-  studentservice:
-    image: egorbekhterev/studentservice:latest
-    container_name: studentservice
+  s-service:
+    image: egorbekhterev/s-service:latest
+    container_name: s-service
     depends_on:
       postgres:
         condition: service_healthy
@@ -70,9 +70,9 @@ services:
       MINIO_USERNAME: studentuser
       MINIO_PASSWORD: studentpassword
     network_mode: host
-  userservice:
-    image: egorbekhterev/userservice:latest
-    container_name: userservice
+  r-service:
+    image: egorbekhterev/r-service:latest
+    container_name: r-service
     environment:
       BOOTSTRAP_SERVER: localhost:29092
     network_mode: host

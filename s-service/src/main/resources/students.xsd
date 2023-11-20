@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.bekhterev.ru/sservice/xml"
+           targetNamespace="http://www.bekhterev.ru/sservice/xml" elementFormDefault="qualified">
+
+    <xs:element name="getStudentRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="recordBookNumber" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getStudentResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="student" type="tns:student" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="student">
+        <xs:sequence>
+            <xs:element name="recordBookNumber" type="xs:string" />
+            <xs:element name="faculty" type="tns:faculty" />
+            <xs:element name="lastName" type="xs:string" />
+            <xs:element name="firstName" type="xs:string" />
+            <xs:element name="middleName" type="xs:string" />
+            <xs:element name="fileUrl" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:simpleType name="faculty">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ARTS" />
+            <xs:enumeration value="CLASSICS" />
+            <xs:enumeration value="COMMERCE" />
+            <xs:enumeration value="ECONOMICS" />
+            <xs:enumeration value="EDUCATION" />
+            <xs:enumeration value="ENGINEERING" />
+            <xs:enumeration value="HEALTH" />
+            <xs:enumeration value="HUMANITIES" />
+            <xs:enumeration value="IT" />
+            <xs:enumeration value="LAW" />
+            <xs:enumeration value="PHILOSOPHY" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="getAllStudentsRequest">
+        <xs:complexType>
+            <xs:sequence/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getAllStudentsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="student" type="tns:student" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
