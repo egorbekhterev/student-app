@@ -58,7 +58,7 @@ services:
       - kafka
       - zookeeper
   s-service:
-    image: egorbekhterev/s-service:latest
+    build: ./s-service
     container_name: s-service
     depends_on:
       postgres:
@@ -71,7 +71,7 @@ services:
       MINIO_PASSWORD: studentpassword
     network_mode: host
   r-service:
-    image: egorbekhterev/r-service:latest
+    build: ./r-service
     container_name: r-service
     environment:
       BOOTSTRAP_SERVER: localhost:29092
