@@ -17,17 +17,18 @@ import java.util.concurrent.ExecutionException;
 @Slf4j
 public class StudentKafkaSender {
 
-    private final ReplyingKafkaTemplate<Long, String, String> replyingKafkaTemplate;
+    private final ReplyingKafkaTemplate<String, String, String> replyingKafkaTemplate;
 
     @Value("${kafka.topic.students}")
     private String studentsTopicName;
 
-    public String sendRecordBookNumber(String recordBookNumber) throws ExecutionException, InterruptedException {
-        ProducerRecord<Long, String> studentsRecord = new ProducerRecord<>(studentsTopicName, recordBookNumber);
-        RequestReplyFuture<Long, String, String> future = replyingKafkaTemplate.sendAndReceive(studentsRecord);
-        SendResult<Long, String> sendResult = future.getSendFuture().get();
-        log.info("Message sent: '{}'", sendResult.getProducerRecord().value());
-        ConsumerRecord<Long, String> consumerRecord = future.get();
+    public String sendRecordBookNumber(String recordBookNumber, String key) throws ExecutionException, InterruptedException {
+        ProducerRecord<String, String> studentsRecord = new ProducerRecord<>(studentsTopicName, key, recordBookNumber);
+        RequestReplyFuture<String, String, String> future = replyingKafkaTemplate.sendAndReceive(studentsRecord);
+        SendResult<String, String> sendResult = future.getSendFuture().get();
+        log.info("Message sent. Key: '{}', value: '{}'", sendResult.getProducerRecord().value(),
+                sendResult.getProducerRecord().key());
+        ConsumerRecord<String, String> consumerRecord = future.get();
         log.info("Message received: '{}'", consumerRecord.value());
         return consumerRecord.value();
     }

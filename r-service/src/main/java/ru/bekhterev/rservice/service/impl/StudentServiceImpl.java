@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.bekhterev.rservice.exception.EntityNotExistException;
 import ru.bekhterev.rservice.exception.ParsingException;
 import ru.bekhterev.rservice.kafka.StudentKafkaSender;
 import ru.bekhterev.rservice.service.StudentService;
@@ -20,11 +21,14 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public GetStudentResponse getStudentByRecordBookNumber(String recordBookNumber) throws ParsingException,
-            ExecutionException, InterruptedException {
-        String student = studentKafkaSender.sendRecordBookNumber(recordBookNumber);
+            ExecutionException, InterruptedException, EntityNotExistException {
+        String studentMessage = studentKafkaSender.sendRecordBookNumber(recordBookNumber, "student");
+        if (studentMessage.contains("Error:")) {
+            throw new EntityNotExistException(studentMessage);
+        }
         XmlMapper xmlMapper = new XmlMapper();
         try {
-            return xmlMapper.readValue(student, GetStudentResponse.class);
+            return xmlMapper.readValue(studentMessage, GetStudentResponse.class);
         } catch (JsonProcessingException e) {
             throw new ParsingException("Exception while parsing xml string from student-service");
         }
@@ -32,10 +36,10 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public GetAllStudentsResponse getStudents() throws ParsingException, ExecutionException, InterruptedException {
-        String students = studentKafkaSender.sendRecordBookNumber("");
+        String studentsMessage = studentKafkaSender.sendRecordBookNumber(null, "studentList");
         XmlMapper xmlMapper = new XmlMapper();
         try {
-            return xmlMapper.readValue(students, GetAllStudentsResponse.class);
+            return xmlMapper.readValue(studentsMessage, GetAllStudentsResponse.class);
         } catch (JsonProcessingException e) {
             throw new ParsingException("Exception while parsing xml string from student-service");
         }

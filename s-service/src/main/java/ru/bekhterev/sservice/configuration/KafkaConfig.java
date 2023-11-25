@@ -18,8 +18,8 @@ import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 @RequiredArgsConstructor
 public class KafkaConfig {
 
-    private final ConsumerFactory<Long, String> consumerFactory;
-    private final ProducerFactory<Long, String> producerFactory;
+    private final ConsumerFactory<String, String> consumerFactory;
+    private final ProducerFactory<String, String> producerFactory;
 
     @Value("${kafka.topic.students}")
     private String studentsTopicName;
@@ -30,16 +30,15 @@ public class KafkaConfig {
     }
 
     @Bean
-    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<Long, String>> requestReplyListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<Long, String> factory =
-                new ConcurrentKafkaListenerContainerFactory<>();
+    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> requestReplyListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory);
         factory.setReplyTemplate(replyTemplate());
         return factory;
     }
 
     @Bean
-    public KafkaTemplate<Long, String> replyTemplate() {
+    public KafkaTemplate<String, String> replyTemplate() {
         return new KafkaTemplate<>(producerFactory);
     }
 }
