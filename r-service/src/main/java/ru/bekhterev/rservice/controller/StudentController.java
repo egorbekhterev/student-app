@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.bekhterev.rservice.exception.EntityNotExistException;
@@ -26,6 +27,7 @@ public class StudentController {
     private final StudentService studentService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/{recordBookNumber}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<GetStudentResponse> getStudent(@PathVariable String recordBookNumber) {
         try {
             GetStudentResponse student = studentService.getStudentByRecordBookNumber(recordBookNumber);
@@ -40,6 +42,7 @@ public class StudentController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<GetAllStudentsResponse> getStudents() {
         try {
             GetAllStudentsResponse students = studentService.getStudents();

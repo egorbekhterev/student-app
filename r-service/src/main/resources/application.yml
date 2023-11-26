@@ -16,6 +16,20 @@ spring:
       client-id: ${spring.application.name}
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8484/realms/student-realm
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+logging:
+  level:
+    org.springframework.security: TRACE
+jwt:
+  auth:
+    converter:
+      resource-id: student-app
+      principal-attribute: preferred_name
 kafka:
   topic:
     students: students
