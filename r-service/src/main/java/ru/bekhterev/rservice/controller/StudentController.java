@@ -27,7 +27,7 @@ public class StudentController {
     private final StudentService studentService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/{recordBookNumber}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('client_admin', 'client_user')")
     public ResponseEntity<GetStudentResponse> getStudent(@PathVariable String recordBookNumber) {
         try {
             GetStudentResponse student = studentService.getStudentByRecordBookNumber(recordBookNumber);
@@ -42,7 +42,7 @@ public class StudentController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('client_admin', 'client_user')")
     public ResponseEntity<GetAllStudentsResponse> getStudents() {
         try {
             GetAllStudentsResponse students = studentService.getStudents();

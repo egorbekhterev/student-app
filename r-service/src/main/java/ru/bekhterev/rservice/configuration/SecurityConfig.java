@@ -26,7 +26,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(ahr -> ahr
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/v3/api-docs/**").permitAll()
-                        .requestMatchers("/api/v1/students/*").authenticated())
+                        .requestMatchers("/api/v1/**").permitAll()
+                        .requestMatchers("/api/v1/students/**").authenticated())
                 .oauth2ResourceServer(o2rs -> o2rs.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthConverter)))
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();

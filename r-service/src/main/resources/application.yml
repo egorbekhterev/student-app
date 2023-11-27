@@ -20,7 +20,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8484/realms/student-realm
+          issuer-uri: http://localhost:8484/auth/realms/student-realm
           jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
 logging:
   level:
@@ -35,3 +35,9 @@ kafka:
     students: students
     users: users
   timeout: 2000
+keycloak:
+  url: ${KEYCLOAK_URL:http://localhost:8484/auth/}
+  realm: ${KEYCLOAK_REALM:student-realm}
+  client-id: ${KEYCLOAK_CLIENT_ID:admin-cli}
+  username: ${KEYCLOAK_USERNAME:admin}
+  password: ${KEYCLOAK_PASSWORD:admin}
