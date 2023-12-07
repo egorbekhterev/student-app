@@ -63,19 +63,23 @@ services:
       - kafka
       - zookeeper
   keycloak:
-    image: jboss/keycloak
+    image: quay.io/keycloak/keycloak:21.1.1
     container_name: keycloak
+    command: -v start-dev --import-realm
     environment:
-      DB_VENDOR: POSTGRES
-      DB_ADDR: postgres
-      DB_DATABASE: students
-      DB_SCHEMA: keycloak
-      DB_USER: postgres
-      DB_PASSWORD: password
-      KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: admin
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: postgres
+      KC_DB_URL_HOST: postgres
+      KC_DB_URL_DATABASE: students
+      KC_DB_SCHEMA: keycloak
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: password
     ports:
       - '8484:8080'
+    volumes:
+      - ./keycloak:/opt/keycloak/data/import
     depends_on:
       postgres:
         condition: service_healthy

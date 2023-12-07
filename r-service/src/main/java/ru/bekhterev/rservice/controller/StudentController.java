@@ -1,5 +1,6 @@
 package ru.bekhterev.rservice.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,7 @@ public class StudentController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/{recordBookNumber}")
     @PreAuthorize("hasAnyRole('client_admin', 'client_user')")
+    @Operation(summary = "Получить данные студента по номеру зачетной книжки")
     public ResponseEntity<GetStudentResponse> getStudent(@PathVariable String recordBookNumber) {
         try {
             GetStudentResponse student = studentService.getStudentByRecordBookNumber(recordBookNumber);
@@ -42,7 +44,8 @@ public class StudentController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAnyRole('client_admin', 'client_user')")
+    @PreAuthorize("hasRole('client_admin')")
+    @Operation(summary = "Получить данные по всем студентам")
     public ResponseEntity<GetAllStudentsResponse> getStudents() {
         try {
             GetAllStudentsResponse students = studentService.getStudents();
