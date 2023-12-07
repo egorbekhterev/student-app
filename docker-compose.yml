@@ -83,27 +83,27 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-#  s-service:
-#    build: ./s-service
-#    container_name: s-service
-#    environment:
-#      HOST_PORT: 9010
-#      DB_NAME: students
-#      BOOTSTRAP_SERVER: localhost:29092
-#      DB_USERNAME: postgres
-#      DB_PASSWORD: password
-#      MINIO_USERNAME: studentuser
-#      MINIO_PASSWORD: studentpassword
-#    depends_on:
-#      postgres:
-#        condition: service_healthy
-#    network_mode: host
-#  r-service:
-#    build: ./r-service
-#    container_name: r-service
-#    environment:
-#      HOST_PORT: 9020
-#      BOOTSTRAP_SERVER: localhost:29092
-#    network_mode: host
+  s-service:
+    build: ./s-service
+    container_name: s-service
+    environment:
+      HOST_PORT: 9010
+      DB_NAME: students
+      BOOTSTRAP_SERVER: localhost:29092
+      DB_USERNAME: postgres
+      DB_PASSWORD: password
+      MINIO_USERNAME: studentuser
+      MINIO_PASSWORD: studentpassword
+    depends_on:
+      postgres:
+        condition: service_healthy
+    network_mode: host
+  r-service:
+    build: ./r-service
+    container_name: r-service
+    environment:
+      HOST_PORT: 9020
+      BOOTSTRAP_SERVER: localhost:29092
+    network_mode: host
 volumes:
   minio_storage: {}
